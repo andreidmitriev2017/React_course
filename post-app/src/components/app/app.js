@@ -26,7 +26,7 @@ const App = () => {
             important: false,
             id: 'fdfdf',
         },
-    ]
+    ].filter(item => typeof item == 'object');
 
     return (
         <div className="app">

@@ -39,7 +39,7 @@ export default class PostListItem extends Component {
 			classNames += ' like';
 		}
 		return (
-			<li className={classNames}>
+			<div className={classNames}>
 				<span
 					className="app-list-item-label"
 					onClick={this.onLike}
@@ -59,7 +59,7 @@ export default class PostListItem extends Component {
 					</button>
 					<i className="fa fa-heart"></i>
 				</div>
-			</li> 
+			</div> 
 		);
 	} 
 };
