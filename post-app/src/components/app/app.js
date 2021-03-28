@@ -45,6 +45,7 @@ export default class App extends Component {
         this.onToggleLiked = this.onToggleLiked.bind(this);
         this.onUpdateSearch = this.onUpdateSearch.bind(this);
         this.onFilterSelect = this.onFilterSelect.bind(this);
+        this.createArr = this.createArr.bind(this);
 
         this.maxId = 4;
     }
@@ -76,14 +77,20 @@ export default class App extends Component {
             }
         });
     }
-
+    createArr(data, id, val) {
+        let newItem = {};
+        const idx = data.findIndex(elem => elem.id === id);
+        const old = data[idx];
+        if (val === 'important') {
+            newItem = {...old, important: !old.important};
+        } else if (val === 'like'){
+            newItem = {...old, like: !old.like};
+        }
+        return [...data.slice(0, idx), newItem, ...data.slice(idx + 1)];
+    }
     onToggleImprotant(id) {
         this.setState(({data}) => {
-            const idx = data.findIndex(elem => elem.id === id);
-            const old = data[idx];
-            const newItem = {...old, important: !old.important};
-            const newArr = [...data.slice(0, idx), newItem, ...data.slice(idx + 1)];
-
+            const newArr = this.createArr(data, id, 'important');
             return {
                 data: newArr,
             }
@@ -92,11 +99,7 @@ export default class App extends Component {
 
     onToggleLiked(id) {
         this.setState(({data}) => {
-            const idx = data.findIndex(elem => elem.id === id);
-            const old = data[idx];
-            const newItem = {...old, like: !old.like};
-            const newArr = [...data.slice(0, idx), newItem, ...data.slice(idx + 1)];
-
+            const newArr = this.createArr(data, id, 'like');
             return {
                 data: newArr,
             }
