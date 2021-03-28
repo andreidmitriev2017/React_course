@@ -3,7 +3,7 @@ import PostListItem from '../post-list-item'
 
 import './post-list.css'
 
-const PostList = ({posts, onDelete}) => {
+const PostList = ({posts, onDelete, onToggleImprotant, onToggleLiked}) => {
 
     const elements = posts.map((item) => {
         const {id, ...itemProps} = item;
@@ -12,6 +12,8 @@ const PostList = ({posts, onDelete}) => {
                 <PostListItem 
                     {...itemProps}
                     onDelete={() => onDelete(id)}
+                    onToggleImprotant={() => onToggleImprotant(id)}
+                    onToggleLiked={() => onToggleLiked(id)}
                 />
             </li>
         );
