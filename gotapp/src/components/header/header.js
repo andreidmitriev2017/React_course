@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from '../../index.js'
 import styled from 'styled-components';
 
 const HeaderBlock = styled.div`
@@ -30,19 +31,19 @@ const Header = () => {
     return (
         <HeaderBlock>
             <HeaderTitle>
-                <a href="#">
+                <Link href="#">
                 Game of Thrones DB
-                </a>
+                </Link>
             </HeaderTitle>
             <HeaderLinks>
                 <li>
-                    <a href="#">Characters</a>
+                    <Link href="#">Characters</Link>
                 </li>
                 <li>
-                    <a href="#">Houses</a>
+                    <Link href="#">Houses</Link>
                 </li>
                 <li>
-                    <a href="#">Books</a>   
+                    <Link href="#">Books</Link>   
                 </li>
             </HeaderLinks>
         </HeaderBlock>
