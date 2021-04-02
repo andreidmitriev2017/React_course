@@ -9,8 +9,20 @@ export default class GotService {
             throw new Error(`Could not fetch ${url}, status: ${result.status}`)
         }
     
-        return await result.json();
+        const data = await result.json();
+        return this.checkEmpty(data);
     };
+
+    checkEmpty(obj) {
+
+        for (let item in obj) {
+            if (obj[item] === '') {
+                obj[item] = "no data :("
+            }
+        }
+
+        return obj;
+    }
 
     _transformCharacter(char) {
         return {
