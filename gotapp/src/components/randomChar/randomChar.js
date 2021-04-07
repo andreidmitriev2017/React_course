@@ -22,17 +22,22 @@ const Term = styled.span`
     font-weight: bold;
 `;
 export default class RandomChar extends Component {
-
-    constructor() {
-        super();
-        this.updateChar();
-    }
-
+    
     gotService = new gotService();
+
     state = {
         char: {},
         loading: true,
         error: false,
+    }
+
+    componentDidMount() {
+        this.updateChar();
+        this.timerId = setInterval(this.updateChar, 1500);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timerId);
     }
 
     onError = (err) => {
@@ -49,7 +54,7 @@ export default class RandomChar extends Component {
         });
     }
 
-    updateChar() {
+    updateChar = () => {
         // от 140 до 25
         const id = Math.floor(Math.random() * 140 + 25);
         this.gotService.getCharacter(id)
@@ -58,7 +63,6 @@ export default class RandomChar extends Component {
     }
 
     render() {
-
         const {char, loading, error} = this.state;
 
         const errorMessage = error ? <ErrorMessage/> : null;

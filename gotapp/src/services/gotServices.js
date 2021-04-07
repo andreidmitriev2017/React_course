@@ -2,6 +2,7 @@ export default class GotService {
     constructor() {
         this._apiBase = 'https://www.anapioficeandfire.com/api';
     }
+
     async getResource(url) {
         const result = await fetch(`${this._apiBase}${url}`);
     
@@ -9,28 +10,25 @@ export default class GotService {
             throw new Error(`Could not fetch ${url}, status: ${result.status}`)
         }
     
-        const data = await result.json();
-        return this.checkEmpty(data);
-    };
-
-    checkEmpty(obj) {
-
-        for (let item in obj) {
-            if (obj[item] === '') {
-                obj[item] = "no data :("
-            }
-        }
-
-        return obj;
+        return await result.json();
     }
 
-    _transformCharacter(char) {
+    checkEmpty = (data) => {
+        return data ? data : 'no data :('
+    }
+
+    cutId = (str) => {
+        return str.match(/\d+$/);
+    }
+
+    _transformCharacter = (char) => {
         return {
-            name: char.name,
-            gender: char.gender,
-            born: char.born,
-            died: char.died,
-            culture: char.culture,
+            id: this.cutId(char.url),
+            name: this.checkEmpty(char.name),
+            gender: this.checkEmpty(char.gender),
+            born: this.checkEmpty(char.born),
+            died: this.checkEmpty(char.died),
+            culture: this.checkEmpty(char.culture),
         }
     }
 
@@ -45,14 +43,15 @@ export default class GotService {
         return this._transformCharacter(result);
     }
 
-    _transformHouse(house) {
+    _transformHouse = (house) => {
         return {
-            name: house.name,
-            region: house.region,
-            words: house.words,
-            titles: house.titles,
-            overlord: house.overlord,
-            ancestralWeapons: house.ancestralWeapons,
+            id: this.cutId(house.url),
+            name: this.checkEmpty(house.name),
+            region: this.checkEmpty(house.region),
+            words: this.checkEmpty(house.words),
+            titles: this.checkEmpty(house.titles),
+            overlord: this.checkEmpty(house.overlord),
+            ancestralWeapons: this.checkEmpty(house.ancestralWeapons),
         }
     }
 
@@ -66,13 +65,14 @@ export default class GotService {
         return this._transformHouse(result);
     }
 
-    _transformBook(book) {
+    _transformBook = (book) => {
         return {
-            name: book.name,
-            numberOfPages: book.numberOfPages,
-            publisher: book.publisher,
-            country: book.country,
-            released: book.released,
+            id: this.cutId(book.url),
+            name: this.checkEmpty(book.name),
+            numberOfPages: this.checkEmpty(book.numberOfPages),
+            publisher: this.checkEmpty(book.publisher),
+            country: this.checkEmpty(book.country),
+            released: this.checkEmpty(book.released),
         }
     }
 

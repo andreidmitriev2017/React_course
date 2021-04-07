@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {Col, Row, Container, Button} from 'reactstrap';
 import styled from "styled-components";
+
 import Header from '../header';
 import RandomChar from '../randomChar';
-import ItemList from '../itemList';
-import CharDetails from '../charDetails';
+import ErrorMessage from '../errorMessage';
+import CharacterPage from '../characterPage'
 
 const Btn = styled(Button)`
     margin-bottom: 40px;
@@ -13,7 +14,15 @@ export default class App extends Component {
 
     state = {
         visible: true,
+        error: false,
     };
+
+    componentDidCatch() {
+        console.log('error');
+        this.setState({
+            error: true,
+        })
+    }
 
     toggleChar = () => {
         const {visible} = this.state;
@@ -22,11 +31,16 @@ export default class App extends Component {
         })
     }
 
+
     render() {
 
-        const {visible} = this.state;
+        const {visible, error} = this.state;
 
         const content = visible ? <RandomChar/> : null;
+
+        if (error) {
+            return <ErrorMessage/>
+        }
 
         return (
             <> 
@@ -45,15 +59,7 @@ export default class App extends Component {
                             <Btn onClick={this.toggleChar}>Toggle rendom character</Btn>
                         </Col>
                     </Row>
-
-                    <Row>
-                        <Col md='6'>
-                            <ItemList />
-                        </Col>
-                        <Col md='6'>
-                            <CharDetails />
-                        </Col>
-                    </Row>
+                    <CharacterPage/>
                 </Container>
             </>
         );
